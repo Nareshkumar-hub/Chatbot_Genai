@@ -1,36 +1,48 @@
 import streamlit as st
-from langchain.chat_models import ChatGooglePalm
-from langchain.schema import HumanMessage, AIMessage
-from dotenv import load_dotenv
-import os
-load_dotenv()
-api_key = os.getenv("AIzaSyBc0I2Cf1FW2xEgm6aI4OX7C2zOt2iazVU")
+import pandas as pd
+st.title('Basic Streamlit Demo')
+user_name=st.text_input('Enter your name:')
+if user_name:
+    st.write(f'Hello,{user_name}!')
+age = st.slider('Select your age:',0 ,100, 25)
+st.write(f'You are {age} years old.')
+agree = st.checkbox('I agree')
+if agree:
+    st.write('Thank you for agreeing!')
 
-if not api_key:
-    st.error("GOOGLE_API_KEY not found! Please set it in your .env file.")
-    st.stop()
+if st.button('Click me'):
+    st.write('Button clicked!')
 
-palm = ChatGooglePalm(google_api_key=api_key, temperature=0.4)
-I
-st.title("🤖 Google Palm Chatbot Demo")
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-for message in st.session_state.messages:
-    if isinstance(message, HumanMessage):
-        st.markdown(f"**You:** {message.content}")
-    else:
-        st.markdown(f"**Bot:** {message.content}")
+option = st.radio(
+    "What's your favorite color?",
+    ('Red',"Green",'Blue'))
 
-# User input
-user_input = st.text_input("Type your message:")
+if option:
+    st.write(f'Your favorite color is {option}.')
 
-if st.button("Send") and user_input:
+selected_option = st.selectbox(
+    'Select a number',
+    [1,2,3,4,5])
 
-    user_message = HumanMessage(content=user_input)
-    st.session_state.messages.append(user_message)
+st.write(f'You selected:{selectbox_option}')
 
-    response = palm.invoke(st.session_state.messages)
+data = {
+    'Coloumn 1' : [1,2,3,4],
+    'Coloumn 2' : [10,20,30,40]
+}
 
-    st.session_state.messages.append(response)
+df = pd.DataFrame(data)
 
-    st.experimental_rerun()
+st.write('Here is a sample dataframe:')
+
+st.write(df)
+
+st.Dataframe(df)
+
+st.table(df)
+
+st.linechart(df)
+
+st.image('https://www.google.com/url?sa=i&url=https%3A%2F%2Fauth0.com%2Fblog%2Fintroduction-to-streamlit-and-streamlit-components%2F&psig=AOvVaw38qK7HC6eoI1VBDYYlcXP-&ust=1746433234006000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCODCvfqwiY0DFQAAAAAdAAAAABAE')
+
+st.markdown('This is **Markdown** text.')
